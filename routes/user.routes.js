@@ -10,6 +10,8 @@ router.post('/register',register)
 
 router.post('/login',login)
 
-router.get('/profile',profile)
+router.get('/profile', profile)
+
+
 
 module.exports= router;

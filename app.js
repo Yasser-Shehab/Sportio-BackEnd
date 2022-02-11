@@ -7,6 +7,7 @@ const userRouter=require('./routes/user.routes')
 
 app.use(express.json());
 app.use("/users", userRouter);
+app.use("/products",productsRouter)
 const port = process.env.PORT;
 const startService =  async () =>{
     try{
