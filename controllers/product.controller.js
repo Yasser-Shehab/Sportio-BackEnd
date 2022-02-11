@@ -27,7 +27,7 @@ const updateProduct = async (req, res) => {
     );
     res.status(200).send(updatedProduct);
   } catch (err) {
-    res.status(404).send(err.message);
+    res.status(400).send(err.message);
   }
 };
 
@@ -49,7 +49,7 @@ const addProduct = async (req, res) => {
     const newProduct = await Product.create(req.body);
     res.status(201).send(newProduct);
   } catch (err) {
-    res.status(404).send(err.message);
+    res.status(400).send(err.message);
   }
 };
 
