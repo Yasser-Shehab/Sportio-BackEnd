@@ -1,6 +1,5 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
-
 const JWT = require("jsonwebtoken");
 
 const getAllOrders = async (req, res) => {
