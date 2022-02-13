@@ -1,4 +1,7 @@
 const Order = require("../models/Order");
+const Product = require("../models/Product");
+
+const JWT = require("jsonwebtoken");
 
 const getAllOrders = async (req, res) => {
   try {
@@ -27,7 +30,28 @@ const getUserOrders = (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    const newOrder = await Order.create(req.body);
+    const userId = JWT.verify(req.user, process.env.JWT_SECRET)._id;
+    const { tax, shippingFee, cartItems } = req.body;
+    let subTotal = 0;
+    for (let item of cartItems) {
+      const product = await Product.findOne({ _id: item.productId });
+      const { _id, title, price } = product;
+      const withDiscount = price - (price * item.discount) / 100;
+      subTotal += item.qty * withDiscount;
+    }
+    const withTax = subTotal + (subTotal * tax) / 100;
+
+    const total = withTax + shippingFee;
+
+    const order = {
+      userId,
+      tax,
+      shippingFee,
+      cartItems,
+      subTotal,
+      total,
+    };
+    const newOrder = await Order.create(order);
     res.status(201).send(newOrder);
   } catch (err) {
     res.status(404).send(err.message);

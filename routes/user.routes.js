@@ -1,17 +1,23 @@
-const express= require("express");
-const {getAllUsers,register,login,profile} =require("../controllers/user.controller")
+const express = require("express");
+const authenticated = require("../middlewares/authentication");
+const authorized = require("../middlewares/authorization");
+const {
+  getAllUsers,
+  register,
+  login,
+  profile,
+  logout,
+} = require("../controllers/user.controller");
 
-const router=express.Router();
+const router = express.Router();
 
-router.get('/',getAllUsers)
+router.get("/", authenticated, authorized, getAllUsers);
 
+router.post("/register", register);
 
-router.post('/register',register)
+router.post("/login", login);
 
-router.post('/login',login)
+router.get("/profile", authenticated, profile);
+router.get("/logout", authenticated, logout);
 
-router.get('/profile', profile)
-
-
-
-module.exports= router;
+module.exports = router;

@@ -3,6 +3,7 @@ const JWT = require("jsonwebtoken");
 
 const getAllUsers = async (req, res) => {
   try {
+    console.log("gai mn hna", req.user);
     const users = await User.find({});
     res.status(200).send(users);
   } catch (err) {
@@ -39,9 +40,13 @@ const login = async (req, res) => {
       return res.status(401).send("Invalid email or password");
     }
     const userToken = JWT.sign(
-      { _id: user._id, email: user.email },
+      { _id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET
     );
+
+    res.cookie("token", userToken, {
+      httpOnly: true,
+    });
     res.status(200).send(userToken);
   } catch (err) {
     res.status(400).send(err.message);
@@ -49,7 +54,21 @@ const login = async (req, res) => {
 };
 
 const profile = async (req, res) => {
-  res.send("User data");
+  try {
+    const user = JWT.verify(req.user, process.env.JWT_SECRET);
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(404).send("Not found");
+  }
 };
 
-module.exports = { register, login, profile, getAllUsers };
+const logout = (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).send("Logged out");
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+};
+
+module.exports = { register, login, profile, getAllUsers, logout };
