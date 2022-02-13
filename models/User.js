@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  address: {
+    street: String,
+    city: String,
+    country: String,
+  },
 });
 
 userSchema.pre("save", async function () {
