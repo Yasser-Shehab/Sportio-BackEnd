@@ -32,11 +32,21 @@ const createOrder = async (req, res) => {
     const userId = JWT.verify(req.user, process.env.JWT_SECRET)._id;
     const { tax, shippingFee, cartItems } = req.body;
     let subTotal = 0;
+    orderItems = [];
+
     for (let item of cartItems) {
       const product = await Product.findOne({ _id: item.productId });
-      const { _id, title, price } = product;
-      const withDiscount = price - (price * item.discount) / 100;
+      const { _id, title, price, image, discount } = product;
+      orderItem = {
+        qty: item.qty,
+        title,
+        price,
+        image,
+        productId: _id,
+      };
+      const withDiscount = price - (price * discount) / 100;
       subTotal += item.qty * withDiscount;
+      orderItems = [...orderItems, orderItem];
     }
     const withTax = subTotal + (subTotal * tax) / 100;
 
@@ -46,10 +56,11 @@ const createOrder = async (req, res) => {
       userId,
       tax,
       shippingFee,
-      cartItems,
+      cartItems: orderItems,
       subTotal,
       total,
     };
+
     const newOrder = await Order.create(order);
     res.status(201).send(newOrder);
   } catch (err) {
