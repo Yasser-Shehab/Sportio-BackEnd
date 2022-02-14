@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 const connectDb = require("./db/connect");
 const app = express();
 require("dotenv").config();
@@ -10,6 +11,7 @@ const orderRouter = require("./routes/order.routes");
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload());
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);

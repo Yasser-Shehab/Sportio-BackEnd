@@ -21,6 +21,7 @@ const productSchema = mongoose.Schema({
   },
   inStock: {
     type: Number,
+    required: true,
     defualt: 0,
   },
   discount: {
@@ -28,8 +29,9 @@ const productSchema = mongoose.Schema({
     default: 0,
     max: 100,
   },
-  category: {
+  categoryId: {
     type: mongoose.Types.ObjectId,
+    required: true,
     ref: "Category",
   },
 });

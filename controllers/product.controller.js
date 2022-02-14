@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const path = require("path");
 
 const getAllProducts = async (req, res) => {
   try {
@@ -53,10 +54,17 @@ const addProduct = async (req, res) => {
   }
 };
 
+const uploadImage = async (req, res) => {
+  const { name } = req.files.image;
+  const imagePath = path.join(__dirname, `../public/uploads/${name}`);
+  console.log(imagePath);
+};
+
 module.exports = {
   getAllProducts,
   getSingleProduct,
   updateProduct,
   deleteProduct,
   addProduct,
+  uploadImage,
 };

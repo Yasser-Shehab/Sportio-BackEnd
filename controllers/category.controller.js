@@ -1,4 +1,5 @@
 const Category = require("../models/Category");
+const Product = require("../models/Product");
 
 const addCategory = async (req, res) => {
   try {
@@ -19,10 +20,10 @@ const getAllCategories = async (req, res) => {
   }
 };
 
-const getSingleCategory = async (req, res) => {
+const getCategoryProducts = async (req, res) => {
   try {
-    const category = await Category.findOne({ _id: req.params.id });
-    res.status(200).send(category);
+    const products = await Product.find({ categoryId: req.params.id });
+    res.status(200).send(products);
   } catch (err) {
     res.status(404).send(err.message);
   }
@@ -57,7 +58,7 @@ const deleteCategory = async (req, res) => {
 module.exports = {
   addCategory,
   getAllCategories,
-  getSingleCategory,
+  getCategoryProducts,
   updateCategory,
   deleteCategory,
 };

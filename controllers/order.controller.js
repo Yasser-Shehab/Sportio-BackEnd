@@ -13,15 +13,19 @@ const getAllOrders = async (req, res) => {
 
 const getSingleOrder = async (req, res) => {
   try {
-    const order = await Order.findOne({ _id: req.body.id });
+    const order = await Order.findOne({ _id: req.params.id });
     res.status(200).send(order);
   } catch (err) {
     res.status(404).send(err.message);
   }
 };
 
-const getUserOrders = (req, res) => {
+const getUserOrders = async (req, res) => {
   try {
+    const userId = JWT.verify(req.user, process.env.JWT_SECRET)._id;
+    console.log(userId);
+    const orders = await Order.find({ userId: userId });
+    res.status(200).send(orders);
   } catch (err) {
     res.status(404).send(err.message);
   }
@@ -36,7 +40,10 @@ const createOrder = async (req, res) => {
 
     for (let item of cartItems) {
       const product = await Product.findOne({ _id: item.productId });
-      const { _id, title, price, image, discount } = product;
+      if (!product) {
+        return res.status(404).send("Product NOT found.");
+      }
+      let { _id, title, price, image, discount, inStock } = product;
       orderItem = {
         qty: item.qty,
         title,
@@ -44,6 +51,14 @@ const createOrder = async (req, res) => {
         image,
         productId: _id,
       };
+      inStock === 0 ? inStock : (inStock -= item.qty);
+      // -----------update inStock Prop in product-------------
+      await Product.findOneAndUpdate(
+        { _id },
+        { inStock },
+        { new: true, runValidators: true }
+      );
+      // ------------------------------------------------------
       const withDiscount = price - (price * discount) / 100;
       subTotal += item.qty * withDiscount;
       orderItems = [...orderItems, orderItem];
@@ -71,7 +86,7 @@ const createOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   try {
     const updatedOrder = await Order.findOneAndUpdate(
-      { _id: req.body.id },
+      { _id: req.params.id },
       req.body,
       { new: true, runValidators: true }
     );
@@ -81,24 +96,10 @@ const updateOrder = async (req, res) => {
   }
 };
 
-const deleteOrder = async (req, res) => {
-  try {
-    const deletedOrder = await Order.findOne({ _id: req.body.id });
-    if (!deletedOrder) {
-      return res.status(404).send("This Order has been removed");
-    }
-    await deletedOrder.remove();
-    res.status(200).send("Order cancelled");
-  } catch (err) {
-    res.status(404).send(err.message);
-  }
-};
-
 module.exports = {
   getAllOrders,
   getSingleOrder,
   getUserOrders,
   createOrder,
   updateOrder,
-  deleteOrder,
 };

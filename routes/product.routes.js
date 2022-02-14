@@ -8,12 +8,14 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
+  uploadImage,
 } = require("../controllers/product.controller");
 
 router.get("/", getAllProducts);
 
 router.get("/:id", getSingleProduct);
 
+router.post("/uploadImage", uploadImage);
 router.post("/", authenticated, authorized, addProduct);
 
 router.patch("/:id", authenticated, authorized, updateProduct);
