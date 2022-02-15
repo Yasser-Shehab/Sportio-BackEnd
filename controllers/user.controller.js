@@ -5,9 +5,9 @@ const getAllUsers = async (req, res) => {
   try {
     console.log("gai mn hna", req.user);
     const users = await User.find({});
-    res.status(200).send({ data: users, count: users.length });
+    res.status(200).send(users);
   } catch (err) {
-    res.status(404).send({ message: err.message });
+    res.status(404).send(err.message);
   }
 };
 const register = async (req, res) => {
@@ -21,9 +21,9 @@ const register = async (req, res) => {
       password,
       role,
     });
-    res.status(201).send({ data: user });
+    res.status(201).send(user);
   } catch (err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send(err.message);
   }
 };
 
@@ -32,12 +32,12 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).send({ message: "User Not Found" });
+      return res.status(404).send("User Not Found");
     }
     const matched = await user.comparePassword(password);
 
     if (!matched) {
-      return res.status(401).send({ message: "Invalid email or password" });
+      return res.status(401).send("Invalid email or password");
     }
     const userToken = JWT.sign(
       { _id: user._id, email: user.email, role: user.role },
@@ -49,25 +49,25 @@ const login = async (req, res) => {
     });
     res.status(200).send({ token: userToken });
   } catch (err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send(err.message);
   }
 };
 
 const profile = async (req, res) => {
   try {
     const user = JWT.verify(req.user, process.env.JWT_SECRET);
-    res.status(200).send({ user });
+    res.status(200).send(user);
   } catch (err) {
-    res.status(404).send({ message: "Not found" });
+    res.status(404).send("Not found");
   }
 };
 
 const logout = (req, res) => {
   try {
     res.clearCookie("token");
-    res.status(200).send({ message: "Logged out" });
+    res.status(200).send("Logged out");
   } catch (err) {
-    res.status(404).send({ message: err.message });
+    res.status(404).send(err.message);
   }
 };
 
@@ -79,7 +79,7 @@ const isAvailableEmail = async (req, res) => {
     }
     res.status(200).send({ available: true });
   } catch (err) {
-    res.status(404).send({ message: err.message });
+    res.status(404).send(err);
   }
 };
 

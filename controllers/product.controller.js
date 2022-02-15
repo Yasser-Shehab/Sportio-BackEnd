@@ -6,7 +6,7 @@ const getAllProducts = async (req, res) => {
     const products = await Product.find({});
     res.status(200).send({ data: products, count: products.length });
   } catch (err) {
-    res.status(404).send({message:err.message});
+    res.status(404).send(err.message);
   }
 };
 
@@ -15,7 +15,7 @@ const getSingleProduct = async (req, res) => {
     const product = await Product.findOne({ _id: req.params.id });
     res.status(200).send(product);
   } catch (err) {
-    res.status(404).send({message:err.message});
+    res.status(404).send(err.message);
   }
 };
 
@@ -26,9 +26,9 @@ const updateProduct = async (req, res) => {
       req.body,
       { new: true, runValidators: true }
     );
-    res.status(200).send({data:updatedProduct});
+    res.status(200).send(updatedProduct);
   } catch (err) {
-    res.status(400).send({message:err.message});
+    res.status(400).send(err.message);
   }
 };
 
@@ -36,7 +36,7 @@ const deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await Product.findOne({ _id: req.params.id });
     if (!deletedProduct) {
-      return res.status(404).send({message:"This Product already deleted"});
+      return res.status(404).send("This Product already deleted");
     }
     await deletedProduct.remove();
     res.status(200).send("Deleted Successfully");

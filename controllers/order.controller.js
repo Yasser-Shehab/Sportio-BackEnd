@@ -7,7 +7,7 @@ const getAllOrders = async (req, res) => {
     const orders = await Order.find({});
     res.status(200).send(orders);
   } catch (err) {
-    res.status(404).send({message:err.message});
+    res.status(404).send(err.message);
   }
 };
 
@@ -16,7 +16,7 @@ const getSingleOrder = async (req, res) => {
     const order = await Order.findOne({ _id: req.params.id });
     res.status(200).send(order);
   } catch (err) {
-    res.status(404).send({message:err.message});
+    res.status(404).send(err.message);
   }
 };
 
@@ -27,7 +27,7 @@ const getUserOrders = async (req, res) => {
     const orders = await Order.find({ userId: userId });
     res.status(200).send(orders);
   } catch (err) {
-    res.status(404).send({message:err.message});
+    res.status(404).send(err.message);
   }
 };
 
@@ -41,7 +41,7 @@ const createOrder = async (req, res) => {
     for (let item of cartItems) {
       const product = await Product.findOne({ _id: item.productId });
       if (!product) {
-        return res.status(404).send({message:"Product NOT found."});
+        return res.status(404).send("Product NOT found.");
       }
       let { _id, title, price, image, discount, inStock } = product;
       orderItem = {
@@ -77,9 +77,9 @@ const createOrder = async (req, res) => {
     };
 
     const newOrder = await Order.create(order);
-    res.status(201).send({data:newOrder});
+    res.status(201).send(newOrder);
   } catch (err) {
-    res.status(404).send({message:err.message});
+    res.status(404).send(err.message);
   }
 };
 
@@ -90,9 +90,9 @@ const updateOrder = async (req, res) => {
       req.body,
       { new: true, runValidators: true }
     );
-    res.status(200).send({data:updatedOrder});
+    res.status(200).send(updatedOrder);
   } catch (err) {
-    res.status(400).send({message:err.message});
+    res.status(400).send(err.message);
   }
 };
 
