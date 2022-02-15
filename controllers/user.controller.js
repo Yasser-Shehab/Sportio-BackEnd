@@ -71,4 +71,23 @@ const logout = (req, res) => {
   }
 };
 
-module.exports = { register, login, profile, getAllUsers, logout };
+const isAvailableEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      res.status(409).send({ available: false });
+    }
+    res.status(200).send({ available: true });
+  } catch (err) {
+    res.status(404).send(err);
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  profile,
+  getAllUsers,
+  logout,
+  isAvailableEmail,
+};

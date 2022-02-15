@@ -7,6 +7,7 @@ const {
   login,
   profile,
   logout,
+  isAvailableEmail,
 } = require("../controllers/user.controller");
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.get("/", authenticated, authorized, getAllUsers);
 router.post("/register", register);
 
 router.post("/login", login);
+router.post("/isAvailable", isAvailableEmail);
 
 router.get("/profile", authenticated, profile);
 router.get("/logout", authenticated, logout);

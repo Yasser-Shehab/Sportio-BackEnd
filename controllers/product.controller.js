@@ -55,9 +55,19 @@ const addProduct = async (req, res) => {
 };
 
 const uploadImage = async (req, res) => {
-  const { name } = req.files.image;
-  const imagePath = path.join(__dirname, `../public/uploads/${name}`);
-  console.log(imagePath);
+  try {
+    let { name, mimetype } = req.files.image;
+    if (!mimetype.startsWith("image")) {
+      return res.status(400).send("Please upload image.");
+    }
+    name = Date.now() + name;
+    const imagePath = path.join(__dirname, `../public/uploads/${name}`);
+    await req.files.image.mv(imagePath);
+    console.log(req.files.image);
+    res.status(200).send(imagePath);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 };
 
 module.exports = {
