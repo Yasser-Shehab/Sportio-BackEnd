@@ -6,7 +6,7 @@ const addCategory = async (req, res) => {
     const category = await Category.create(req.body);
     res.status(201).send(category);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).send({message:err.message});
   }
 };
 
@@ -16,7 +16,7 @@ const getAllCategories = async (req, res) => {
     const categories = await Category.find({});
     res.status(200).send(categories);
   } catch (err) {
-    res.status(404).send(err.message);
+    res.status(404).send({message:err.message});
   }
 };
 
@@ -25,7 +25,7 @@ const getCategoryProducts = async (req, res) => {
     const products = await Product.find({ categoryId: req.params.id });
     res.status(200).send(products);
   } catch (err) {
-    res.status(404).send(err.message);
+    res.status(404).send({message:err.message});
   }
 };
 
@@ -36,9 +36,9 @@ const updateCategory = async (req, res) => {
       req.body,
       { new: true, runValidators: true }
     );
-    res.status(200).send(category);
+    res.status(200).send({data:category});
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).send({message:err.message});
   }
 };
 
@@ -46,12 +46,12 @@ const deleteCategory = async (req, res) => {
   try {
     const category = await Category.findOne({ _id: req.params.id });
     if (!category) {
-      res.status(404).send("this category already removed");
+      res.status(404).send({message:"this category already removed"});
     }
     await category.remove();
-    res.status(200).send("category removed successfully");
+    res.status(200).send({message:"category removed successfully"});
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).send({message:err.message});
   }
 };
 
