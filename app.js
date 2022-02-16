@@ -1,6 +1,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
+const helmet = require("helmet");
+const cors = require("cors");
 const connectDb = require("./db/connect");
 const app = express();
 require("dotenv").config();
@@ -9,7 +11,10 @@ const productRouter = require("./routes/product.routes");
 const categoryRouter = require("./routes/category.routes");
 const orderRouter = require("./routes/order.routes");
 
+app.use(helmet());
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(fileUpload());
 app.use("/users", userRouter);
