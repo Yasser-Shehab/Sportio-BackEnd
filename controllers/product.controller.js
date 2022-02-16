@@ -4,7 +4,7 @@ const path = require("path");
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find({});
-    res.status(200).send(products);
+    res.status(200).send({ data: products, count: products.length });
   } catch (err) {
     res.status(404).send(err.message);
   }
