@@ -12,7 +12,7 @@ const categoryRouter = require("./routes/category.routes");
 const orderRouter = require("./routes/order.routes");
 
 app.use(helmet());
-app.use(cors({ origin: "http://localhost:4200" }));
+app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
