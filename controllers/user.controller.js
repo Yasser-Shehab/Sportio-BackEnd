@@ -47,7 +47,7 @@ const login = async (req, res) => {
     res.cookie("token", userToken, {
       httpOnly: true,
     });
-    res.status(200).send(userToken);
+    res.status(200).send({ token: userToken });
   } catch (err) {
     res.status(400).send(err.message);
   }
