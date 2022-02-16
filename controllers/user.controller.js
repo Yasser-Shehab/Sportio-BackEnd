@@ -44,7 +44,10 @@ const login = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    res.cookie("token", userToken);
+    res.cookie("token", userToken, {
+      httpOnly: true,
+      sameSite: false,
+    });
     res.status(200).send({ token: userToken });
   } catch (err) {
     res.status(400).send(err.message);
