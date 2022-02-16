@@ -12,7 +12,7 @@ const {
 
 const router = express.Router();
 
-router.get("/", authenticated, authorized, getAllUsers);
+router.get("/", getAllUsers);
 
 router.post("/register", register);
 
