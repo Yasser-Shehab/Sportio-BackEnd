@@ -47,6 +47,7 @@ const login = async (req, res) => {
     res.cookie("token", userToken, {
       httpOnly: true,
       sameSite: false,
+      signed: true,
     });
     res.status(200).send({ token: userToken });
   } catch (err) {
