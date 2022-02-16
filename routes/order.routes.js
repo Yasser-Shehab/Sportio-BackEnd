@@ -12,7 +12,7 @@ const {
 const router = express.Router();
 
 router.get("/myorders", authenticated, getUserOrders);
-router.get("/", authenticated, authorized, getAllOrders);
+router.get("/", getAllOrders);
 router.get("/:id", authenticated, authorized, getSingleOrder);
 router.post("/", authenticated, createOrder);
 router.patch("/:id", authenticated, authorized, updateOrder);
