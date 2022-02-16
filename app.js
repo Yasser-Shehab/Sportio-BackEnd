@@ -14,7 +14,7 @@ const orderRouter = require("./routes/order.routes");
 app.use(helmet());
 app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser("secret"));
 app.use(fileUpload());
 app.use("/users", userRouter);
 app.use("/products", productRouter);
