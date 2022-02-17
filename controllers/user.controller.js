@@ -68,9 +68,10 @@ const profile = async (req, res) => {
 const logout = (req, res) => {
   try {
     res.clearCookie("token");
+
     res.status(200).send({ message: "Logged out" });
   } catch (err) {
-    res.status(404).send(err.message);
+    res.status(400).send(err.message);
   }
 };
 
