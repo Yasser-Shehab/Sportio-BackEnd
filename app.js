@@ -13,7 +13,22 @@ const categoryRouter = require("./routes/category.routes");
 const orderRouter = require("./routes/order.routes");
 
 app.use(helmet());
-app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
+const allowedOrigins = [
+  "http://localhost:4200",
+  "https://sportio-backend.herokuapp.com",
+];
+app.use(
+  cors({
+    origin: function (origin, next) {
+      if (!origin) return next(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return next(new Error("The CORS policy does not allow access"), false);
+      }
+      return next(null, true);
+    },
+  })
+);
+// app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json({ limit: "1000000kb" }));
 app.use(express.urlencoded({ limit: "1000000kb", extended: false }));
 app.use(express.static("public"));
