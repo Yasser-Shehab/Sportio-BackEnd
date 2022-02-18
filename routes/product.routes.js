@@ -1,4 +1,5 @@
 const express = require("express");
+const multer = require("multer");
 const upload = multer({ dest: "public/uploads/" });
 const authenticated = require("../middlewares/authentication");
 const authorized = require("../middlewares/authorization");
