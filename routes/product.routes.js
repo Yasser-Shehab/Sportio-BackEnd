@@ -1,4 +1,5 @@
 const express = require("express");
+const upload = multer({ dest: "public/uploads/" });
 const authenticated = require("../middlewares/authentication");
 const authorized = require("../middlewares/authorization");
 const router = express.Router();
@@ -16,7 +17,7 @@ router.get("/", getAllProducts);
 router.get("/:id", getSingleProduct);
 
 router.post("/uploadImage", uploadImage);
-router.post("/", authenticated, authorized, addProduct);
+router.post("/", upload.single("image"), authenticated, authorized, addProduct);
 
 router.patch("/:id", authenticated, authorized, updateProduct);
 

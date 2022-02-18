@@ -3,6 +3,8 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const helmet = require("helmet");
 const cors = require("cors");
+const multer = require("multer");
+
 const connectDb = require("./db/connect");
 const app = express();
 require("dotenv").config();
