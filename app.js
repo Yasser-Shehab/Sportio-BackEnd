@@ -16,6 +16,8 @@ app.use(helmet());
 app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json({ limit: "1000000kb" }));
 app.use(express.urlencoded({ limit: "1000000kb", extended: false }));
+app.use(express.static("public"));
+// app.use('/images', express.static('images'));
 app.use(fileUpload());
 app.use(cookieParser("secret"));
 app.use("/users", userRouter);
