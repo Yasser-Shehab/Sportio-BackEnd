@@ -64,7 +64,7 @@ const uploadImage = async (req, res) => {
     const imagePath = path.join(__dirname, `../public/uploads/${name}`);
     await req.files.image.mv(imagePath);
     console.log(req.files.image);
-    res.status(200).send(imagePath);
+    res.status(200).send({ imagePath });
   } catch (err) {
     res.status(400).send(err.message);
   }
