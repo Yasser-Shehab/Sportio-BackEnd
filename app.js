@@ -19,6 +19,7 @@ const allowedOrigins = [
 ];
 app.use(
   cors({
+    credentials: true,
     origin: function (origin, next) {
       if (!origin) return next(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
