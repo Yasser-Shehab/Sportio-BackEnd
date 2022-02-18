@@ -13,8 +13,8 @@ const orderRouter = require("./routes/order.routes");
 
 app.use(helmet());
 app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
-app.use(express.json({ limit: "10000kb" }));
-app.use(express.urlencoded({ limit: "10000kb", extended: true }));
+app.use(express.json({ limit: "1000000kb" }));
+app.use(express.urlencoded({ limit: "1000000kb", extended: true }));
 app.use(fileUpload());
 app.use(cookieParser("secret"));
 app.use("/users", userRouter);
