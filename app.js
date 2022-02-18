@@ -3,7 +3,6 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const helmet = require("helmet");
 const cors = require("cors");
-const multer = require("multer");
 
 const connectDb = require("./db/connect");
 const app = express();
@@ -14,7 +13,7 @@ const categoryRouter = require("./routes/category.routes");
 const orderRouter = require("./routes/order.routes");
 
 app.use(helmet());
-app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
+app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json({ limit: "1000000kb" }));
 // app.use(express.urlencoded({ limit: "1000000kb", extended: true }));
 app.use(fileUpload());
