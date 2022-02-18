@@ -56,7 +56,7 @@ const addProduct = async (req, res) => {
 
 const uploadImage = async (req, res) => {
   try {
-    let { name, mimetype } = req.files.image;
+    let { name, mimetype } = req.body.image;
     if (!mimetype.startsWith("image")) {
       return res.status(400).send({ message: "Please upload image." });
     }
