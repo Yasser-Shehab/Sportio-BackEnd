@@ -58,7 +58,7 @@ const uploadImage = async (req, res) => {
   try {
     let { name, mimetype } = req.files.image;
     if (!mimetype.startsWith("image")) {
-      return res.status(400).send("Please upload image.");
+      return res.status(400).send({ message: "Please upload image." });
     }
     name = Date.now() + name;
     const imagePath = path.join(__dirname, `../public/uploads/${name}`);
@@ -66,7 +66,7 @@ const uploadImage = async (req, res) => {
     console.log(req.files.image);
     res.status(200).send({ imagePath });
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).send({ message: err.message });
   }
 };
 
