@@ -13,9 +13,10 @@ const orderRouter = require("./routes/order.routes");
 
 app.use(helmet());
 app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
-app.use(express.json());
-app.use(cookieParser("secret"));
 app.use(fileUpload());
+app.use(express.json({ limit: 1024, extended: true }));
+app.use(express.urlencoded({ limit: 1024, extended: true }));
+app.use(cookieParser("secret"));
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
