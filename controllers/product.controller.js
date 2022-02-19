@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const cloudinary = require("cloudinary");
 const path = require("path");
 
 const getAllProducts = async (req, res) => {
@@ -64,6 +65,13 @@ const uploadImage = async (req, res) => {
     const imagePath = path.join(__dirname, `../public/uploads/${name}`);
     await req.files.image.mv(imagePath);
     console.log(req.files.image);
+    cloudinary.v2.uploader.upload(
+      "https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
+      { public_id: "olympic_flag" },
+      function (error, result) {
+        console.log(result);
+      }
+    );
     res.status(200).send({
       imagePath: `https://sportio-backend.herokuapp.com/uploads/${name}`,
     });
