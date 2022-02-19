@@ -21,6 +21,7 @@ const orderRouter = require("./routes/order.routes");
 
 app.use(helmet());
 app.use(helmet.frameguard());
+app.use(helmet.crossOriginEmbedderPolicy());
 const allowedOrigins = [
   "http://localhost:4200",
   "https://sportio-backend.herokuapp.com",
