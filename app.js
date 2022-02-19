@@ -29,8 +29,8 @@ const allowedOrigins = [
   "http://localhost:4200",
   "https://sportio-backend.herokuapp.com",
 ];
-app.use(cors());
-// app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
+// app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 app.use(express.json({ limit: "1000000kb" }));
 app.use(express.urlencoded({ limit: "1000000kb", extended: false }));
 app.use(express.static("public"));
