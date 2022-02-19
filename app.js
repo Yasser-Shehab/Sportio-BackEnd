@@ -27,13 +27,7 @@ const allowedOrigins = [
 app.use(
   cors({
     credentials: true,
-    origin: function (origin, next) {
-      if (!origin) return next(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        return next(new Error("The CORS policy does not allow access"), false);
-      }
-      return next(null, true);
-    },
+    origin: "http://localhost:4200",
   })
 );
 // app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
