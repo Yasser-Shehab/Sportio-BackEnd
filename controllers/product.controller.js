@@ -1,6 +1,6 @@
 const Product = require("../models/Product");
-const cloudinary = require("cloudinary");
 const path = require("path");
+const cloudinary = require("cloudinary").v2;
 
 const getAllProducts = async (req, res) => {
   try {
@@ -57,23 +57,23 @@ const addProduct = async (req, res) => {
 
 const uploadImage = async (req, res) => {
   try {
-    let { name, mimetype } = req.files.image;
-    if (!mimetype.startsWith("image")) {
-      return res.status(400).send({ message: "Please upload image." });
-    }
-    name = Date.now() + name;
-    const imagePath = path.join(__dirname, `../public/uploads/${name}`);
-    await req.files.image.mv(imagePath);
-    console.log(req.files.image);
-    cloudinary.v2.uploader.upload(
-      "https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-      { public_id: "olympic_flag" },
+    // let { name, mimetype } = req.files.image;
+    // if (!mimetype.startsWith("image")) {
+    //   return res.status(400).send({ message: "Please upload image." });
+    // }
+    // name = Date.now() + name;
+    // const imagePath = path.join(__dirname, `../public/uploads/${name}`);
+    // await req.files.image.mv(imagePath);
+    const result = await console.log(req.files.image);
+    cloudinary.uploader.upload(
+      req.files.image.tempFilePath,
+      { use_filename: true, folder: "file-upload" },
       function (error, result) {
         console.log(result);
       }
     );
     res.status(200).send({
-      imagePath: `https://sportio-backend.herokuapp.com/uploads/${name}`,
+      imagePath: result.secure_url,
     });
   } catch (err) {
     res.status(400).send({ message: err.message });

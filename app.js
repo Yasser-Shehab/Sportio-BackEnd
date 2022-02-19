@@ -4,6 +4,13 @@ const fileUpload = require("express-fileupload");
 const helmet = require("helmet");
 const cors = require("cors");
 
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: "heroku-app",
+  api_key: "435898959395763",
+  api_secret: "V6LvRNVr_9tGKefPsbLA6zIAUlI",
+});
+
 const connectDb = require("./db/connect");
 const app = express();
 require("dotenv").config();
@@ -39,7 +46,11 @@ app.use(express.json({ limit: "1000000kb" }));
 app.use(express.urlencoded({ limit: "1000000kb", extended: false }));
 app.use(express.static("public"));
 // app.use('/images', express.static('images'));
-app.use(fileUpload());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+  })
+);
 app.use(cookieParser("secret"));
 app.use("/users", userRouter);
 app.use("/products", productRouter);
