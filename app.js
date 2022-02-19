@@ -15,7 +15,7 @@ const orderRouter = require("./routes/order.routes");
 app.use(
   helmet({
     crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: "same-site" },
+    crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
 const allowedOrigins = [
