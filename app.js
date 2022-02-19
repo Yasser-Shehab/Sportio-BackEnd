@@ -25,6 +25,7 @@ app.use(
     crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
+app.use(helmet.frameguard());
 const allowedOrigins = [
   "http://localhost:4200",
   "https://sportio-backend.herokuapp.com",
