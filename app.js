@@ -19,12 +19,7 @@ const productRouter = require("./routes/product.routes");
 const categoryRouter = require("./routes/category.routes");
 const orderRouter = require("./routes/order.routes");
 
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: "cross-origin" },
-  })
-);
+app.use(helmet());
 const allowedOrigins = [
   "http://localhost:4200",
   "https://sportio-backend.herokuapp.com",
