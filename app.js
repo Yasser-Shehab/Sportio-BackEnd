@@ -1,7 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 const cors = require("cors");
 
 const cloudinary = require("cloudinary").v2;
@@ -19,12 +19,12 @@ const productRouter = require("./routes/product.routes");
 const categoryRouter = require("./routes/category.routes");
 const orderRouter = require("./routes/order.routes");
 
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: false,
-  })
-);
+// app.use(
+//   helmet({
+//     crossOriginEmbedderPolicy: false,
+//     crossOriginResourcePolicy: false,
+//   })
+// );
 const allowedOrigins = [
   "http://localhost:4200",
   "https://sportio-backend.herokuapp.com",
