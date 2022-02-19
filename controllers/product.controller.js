@@ -64,13 +64,9 @@ const uploadImage = async (req, res) => {
     // name = Date.now() + name;
     // const imagePath = path.join(__dirname, `../public/uploads/${name}`);
     // await req.files.image.mv(imagePath);
-    const result = await console.log(req.files.image);
-    cloudinary.uploader.upload(
+    const result = await cloudinary.uploader.upload(
       req.files.image.tempFilePath,
-      { use_filename: true, folder: "file-upload" },
-      function (error, result) {
-        console.log(result);
-      }
+      { use_filename: true, folder: "file-upload" }
     );
     res.status(200).send({
       imagePath: result.secure_url,
