@@ -39,7 +39,7 @@ const deleteProduct = async (req, res) => {
       return res.status(404).send("This Product already deleted");
     }
     await deletedProduct.remove();
-    res.status(200).send("Deleted Successfully");
+    res.status(200).send({ message: "Deleted Successfully" });
   } catch (err) {
     res.status(404).send(err.message);
   }
